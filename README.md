@@ -42,9 +42,11 @@ Here's a walkthrough of implemented user stories:
 
 GIF created with [LiceCap](http://www.cockos.com/licecap/).
 
-## Notes
-
-Describe any challenges encountered while building the app.
+## Challenges / Errors Encountered
+- Challenges when working with collection view flow layout
+    - At first I had to changed **Estimated Size** from clicking Collection View in Storyboard from **Automatic** to **Custom**
+    - When I changed it to **Custom** it ignored my FlowLayout configuration code in viewDidLoad so then I changed the property to **None** and it finally applied my code and my cells matched the video
+    
 
 ## Credits
 
