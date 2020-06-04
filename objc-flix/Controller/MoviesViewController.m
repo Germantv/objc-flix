@@ -131,8 +131,49 @@
     NSString *posterURLString = movie[@"poster_path"];
     NSString *fullPosterURLString = [baseURLString stringByAppendingString:posterURLString];
     
-    NSURL *posterURL = [NSURL URLWithString:fullPosterURLString];
-    [cell.posterImageView setImageWithURL:posterURL];
+    NSString *lowResBaseURLString = @"https://image.tmdb.org/t/p/w200";
+    NSString *lowResPosterURLString = [lowResBaseURLString stringByAppendingString:posterURLString];
+    
+    NSURL *smallPosterURL = [NSURL URLWithString:lowResPosterURLString];
+    NSURL *largePosterURL = [NSURL URLWithString:fullPosterURLString];
+//    [cell.posterImageView setImageWithURL:posterURL];
+    NSURLRequest *requestSmall = [NSURLRequest requestWithURL:smallPosterURL];
+    NSURLRequest *requestLarge = [NSURLRequest requestWithURL:largePosterURL];
+    
+    [cell.posterImageView setImageWithURLRequest:requestSmall placeholderImage:nil success:^(NSURLRequest *imageRequest, NSHTTPURLResponse *imageResponse, UIImage *smallImage) {
+        // imageResponse will be nil if the image is cached
+        if (imageResponse) {
+            NSLog(@"Image was NOT cached, fade in image");
+            cell.posterImageView.alpha = 0.0;
+            cell.posterImageView.image = smallImage;
+            
+            //Animate UIImageView back to alpha 1 over 0.3sec
+            [UIView animateWithDuration:0.3
+            animations:^{
+                
+                cell.posterImageView.alpha = 1.0;
+                
+            } completion:^(BOOL finished) {
+                // The AFNetworking ImageView Category only allows one request to be sent at a time
+                // per ImageView. This code must be in the completion block.
+                [cell.posterImageView setImageWithURLRequest:requestLarge
+                                      placeholderImage:smallImage
+                                               success:^(NSURLRequest *request, NSHTTPURLResponse *response, UIImage * largeImage) {
+                                                    cell.posterImageView.image = largeImage;
+                                      }
+                                               failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error) {
+                                                   // do something for the failure condition of the large image request
+                                                   // possibly setting the ImageView's image to a default image
+                                               }];
+            }];
+        }
+        else {
+            NSLog(@"Image was cached so just update the image");
+            cell.posterImageView.image = smallImage;
+        }
+    } failure:^(NSURLRequest * _Nonnull request, NSHTTPURLResponse * _Nullable response, NSError * _Nonnull error) {
+        // do something for the failure condition
+    }];
     
     return cell;
 }
