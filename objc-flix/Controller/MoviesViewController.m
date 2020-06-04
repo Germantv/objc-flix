@@ -54,6 +54,7 @@
                                                                    style:UIAlertActionStyleCancel
                                                                  handler:^(UIAlertAction * _Nonnull action) {
                                                                         // handle cancel response here. Doing nothing will dismiss the view.
+                   [self dismissViewControllerAnimated:YES completion:nil];
                                                                  }];
                // add the cancel action to the alertController
                [alert addAction:cancelAction];
@@ -63,6 +64,7 @@
                                                                   style:UIAlertActionStyleDefault
                                                                 handler:^(UIAlertAction * _Nonnull action) {
                                                                         // handle response here.
+                   [self dismissViewControllerAnimated:YES completion:nil];
                                                                 }];
                // add the OK action to the alert controller
                [alert addAction:okAction];
