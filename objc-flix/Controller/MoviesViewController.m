@@ -36,6 +36,10 @@
     self.refreshControl = [[UIRefreshControl alloc] init];
     [self.refreshControl addTarget:self action:@selector(fetchMovies) forControlEvents:UIControlEventValueChanged];
     [self.tableView insertSubview:self.refreshControl atIndex:0];
+    
+    UINavigationBar *navBar = self.navigationController.navigationBar;
+    [navBar setBackgroundImage:[UIImage imageNamed:@"tmdb"] forBarMetrics:UIBarMetricsDefault];
+    navBar.tintColor = [UIColor colorWithRed:0.10 green:0.90 blue:0.25 alpha:0.8];
 }
 
 - (void)fetchMovies {
@@ -111,6 +115,7 @@
     
     DetailsViewController *detailVC = [segue destinationViewController];
     detailVC.movie = movie;
+    [tappedCell setSelected:NO];
 }
 
 
@@ -174,6 +179,11 @@
     } failure:^(NSURLRequest * _Nonnull request, NSHTTPURLResponse * _Nullable response, NSError * _Nonnull error) {
         // do something for the failure condition
     }];
+    
+    // set selection style of cell
+    UIView *backgroundView = [[UIView alloc] init];
+    backgroundView.backgroundColor = [UIColor colorWithRed:0/255.0 green:207/255.0 blue:110/255.0 alpha:1.0];
+    cell.selectedBackgroundView = backgroundView;
     
     return cell;
 }

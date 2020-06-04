@@ -38,6 +38,10 @@
     CGFloat itemWidth = (self.collectionView.frame.size.width - layout.minimumInteritemSpacing * (postersPerLine - 1)) / postersPerLine;
     CGFloat itemHeight = itemWidth * 1.5;
     layout.itemSize = CGSizeMake(itemWidth, itemHeight);
+    
+    UINavigationBar *navBar = self.navigationController.navigationBar;
+    [navBar setBackgroundImage:[UIImage imageNamed:@"tmdb"] forBarMetrics:UIBarMetricsDefault];
+    navBar.tintColor = [UIColor colorWithRed:0.10 green:0.90 blue:0.25 alpha:0.8];
 }
 
 
