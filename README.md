@@ -38,7 +38,7 @@ Please list two areas of the assignment you'd like to **discuss further with you
 
 Here's a walkthrough of implemented user stories:
 
-<img src='https://media.giphy.com/media/hPs0KaFX6bQ0azKRjf/giphy.gif' title='Video Walkthrough' alt='Video Walkthrough' />
+![GIF](https://media.giphy.com/media/hPs0KaFX6bQ0azKRjf/giphy.gif)
 
 ## Challenges / Errors Encountered
 - Challenges when working with collection view flow layout
