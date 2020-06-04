@@ -47,6 +47,14 @@ GIF created with [LiceCap](http://www.cockos.com/licecap/).
     - At first I had to changed **Estimated Size** from clicking Collection View in Storyboard from **Automatic** to **Custom**
     - When I changed it to **Custom** it ignored my FlowLayout configuration code in viewDidLoad so then I changed the property to **None** and it finally applied my code and my cells matched the video
     
+    
+- **[NSInvalidArgumentException -[NSNull length]: unrecognized selector sent to instance](https://stackoverflow.com/questions/32808377/nsinvalidargumentexception-nsnull-length-unrecognized-selector-sent-to-insta)**
+    - Was getting a nil error out of nowhere - after setting breakpoints and further inspecting the data getting returned from moviesDB, I found that one movie had a nil `poster_path` and `backdrop_path`
+    - Changed endpoint from /nowplaying to /upcoming to fix my issue since I wanted to move on to the optionals and the fix for this would have been an nil check
+    - *Below is a screenshot of the error for future reference*
+
+<img src='https://github.com/Germantv/objc-flix/blob/master/Screen%20Shot%202020-06-04%20at%209.34.04%20AM.png' title='Error Nil key/value' height='450' width='800' alt='error screenshot' />
+    
 
 ## Credits
 
