@@ -11,7 +11,7 @@
 #import "UIImageView+AFNetworking.h"
 #import "DetailsViewController.h"
 
-@interface MoviesViewController () <UITableViewDelegate, UITableViewDataSource, UISearchBarDelegate>
+@interface MoviesViewController () <UISearchBarDelegate, UITableViewDelegate, UITableViewDataSource>
 
 @property (weak, nonatomic) IBOutlet UISearchBar *searchBar;
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
@@ -38,8 +38,9 @@
     [self.tableView insertSubview:self.refreshControl atIndex:0];
     
     UINavigationBar *navBar = self.navigationController.navigationBar;
-    [navBar setBackgroundImage:[UIImage imageNamed:@"tmdb"] forBarMetrics:UIBarMetricsDefault];
-    navBar.tintColor = [UIColor colorWithRed:0.10 green:0.90 blue:0.25 alpha:0.8];
+    navBar.tintColor = UIColor.systemYellowColor;
+    
+    self.searchBar.searchTextField.textColor = UIColor.systemYellowColor;
 }
 
 - (void)fetchMovies {
@@ -119,6 +120,42 @@
 }
 
 
+// MARK: SearchBar
+- (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText {
+    
+    if (searchText.length != 0) {
+        
+        NSPredicate *predicate = [NSPredicate predicateWithFormat:@"(title contains[c] %@)", searchText];
+        
+        self.filteredMovies = [self.movies filteredArrayUsingPredicate:predicate];
+        
+        NSLog(@"%@", self.filteredMovies);
+        
+    }
+    else {
+        self.filteredMovies = self.movies;
+    }
+    
+    [self.tableView reloadData];
+ 
+}
+
+- (void)searchBarTextDidBeginEditing:(UISearchBar *)searchBar {
+    self.searchBar.showsCancelButton = YES;
+}
+
+- (void)searchBarCancelButtonClicked:(UISearchBar *)searchBar {
+    self.searchBar.showsCancelButton = NO;
+    self.searchBar.text = @"";
+    [self.searchBar resignFirstResponder];
+    
+    // return table view to normal
+    self.filteredMovies = self.movies;
+    [self.tableView reloadData];
+}
+
+
+// MARK: TableView
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     return self.filteredMovies.count;
 }
@@ -153,7 +190,7 @@
             cell.posterImageView.image = smallImage;
             
             //Animate UIImageView back to alpha 1 over 0.3sec
-            [UIView animateWithDuration:0.3
+            [UIView animateWithDuration:2.0
             animations:^{
                 
                 cell.posterImageView.alpha = 1.0;
@@ -186,35 +223,6 @@
     cell.selectedBackgroundView = backgroundView;
     
     return cell;
-}
-
-- (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText {
-    
-    if (searchText.length != 0) {
-        
-        NSPredicate *predicate = [NSPredicate predicateWithFormat:@"(title contains[c] %@)", searchText];
-        
-        self.filteredMovies = [self.movies filteredArrayUsingPredicate:predicate];
-        
-        NSLog(@"%@", self.filteredMovies);
-        
-    }
-    else {
-        self.filteredMovies = self.movies;
-    }
-    
-    [self.tableView reloadData];
- 
-}
-
-- (void)searchBarTextDidBeginEditing:(UISearchBar *)searchBar {
-    self.searchBar.showsCancelButton = YES;
-}
-
-- (void)searchBarCancelButtonClicked:(UISearchBar *)searchBar {
-    self.searchBar.showsCancelButton = NO;
-    self.searchBar.text = @"";
-    [self.searchBar resignFirstResponder];
 }
 
 @end
