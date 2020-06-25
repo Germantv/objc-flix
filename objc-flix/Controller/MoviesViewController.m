@@ -50,7 +50,7 @@
     
     NSURLSessionDataTask *task = [session dataTaskWithRequest:request completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
            if (error != nil) {
-               NSLog(@"%@", [error localizedDescription]);
+               NSLog(@"%@", error.localizedDescription);
                
                NSString *errorText = [NSString stringWithFormat:@"%@", [error localizedDescription]];
                

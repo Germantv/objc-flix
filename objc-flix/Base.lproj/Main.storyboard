@@ -287,11 +287,11 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="CJT-PU-hIF" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="138" y="1548"/>
+            <point key="canvasLocation" x="951" y="1569"/>
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="4RO-0V-Jju"/>
+        <segue reference="BHp-Z3-eyA"/>
     </inferredMetricsTieBreakers>
     <resources>
         <image name="now_playing_tabbar_item" width="21" height="21"/>
